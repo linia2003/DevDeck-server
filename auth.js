@@ -10,8 +10,8 @@ if (!process.env.MONGODB_URI) {
   throw new Error("Missing MONGODB_URI environment variable");
 }
 
+// Initializing MongoClient without blocking top-level execution
 const client = new MongoClient(process.env.MONGODB_URI);
-await client.connect();
 const db = client.db();
 
 // Detect if we are running live on Vercel or locally
@@ -28,17 +28,16 @@ export const auth = betterAuth({
 
   trustedOrigins: [
     process.env.FRONTEND_URL || "http://localhost:3000",
-    "https://devdeck-client.vercel.app" // Add explicit fallback for your Vercel url string
+    "https://devdeck-client.vercel.app" // Explicit fallback for your Vercel client URL string
   ],
 
-  // Dynamically configure cookie handling depending on environment context
- advanced: {
-    // Disable crossSubDomainCookie if you are using default .vercel.app URLs
+  // Configured specifically to maintain cross-domain sessions safely under public suffix (.vercel.app) limits
+  advanced: {
     crossSubDomainCookie: false 
   },
+  
   cookie: isProduction ? {
     secure: true,
     sameSite: "none"
   } : undefined
 });
-  
