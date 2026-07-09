@@ -1,49 +1,63 @@
-Step 1: Open Your Terminal and Clone the Repository
-Open your terminal (Command Prompt, PowerShell, or Terminal on macOS/Linux) and clone the repository using Git. Replace the URL with your repository's actual clone URL if different:
+1. Clone the Repository
 
-Bash
+Open your terminal and clone the repository:
+
 git clone https://github.com/muna-rahman/devdeck-server.git
-Step 2: Navigate into the Project Directory
-Change your current working directory to the cloned repository folder:
+2. Navigate to the Project Folder
 
-Bash
+Move into the project directory:
+
 cd devdeck-server
-(Note: If your local directory structure unzips or clones into the inner folder name, make sure you navigate to the folder containing package.json).
 
-Step 3: Install the Node.js Dependencies
-This project uses several external libraries like Express, Better Auth, and MongoDB. Download and install them by running:
+Note: Make sure you're inside the folder that contains the package.json file.
 
-Bash
+3. Install Dependencies
+
+Install all required Node.js packages:
+
 npm install
-This reads your package.json and cleanly installs everything listed into a local node_modules directory.
 
-Step 4: Create a Local Environment Configuration File
-The server requires secret credentials to connect to your database and handle security encryption. These are purposefully ignored from Git via .gitignore.
+This will install all dependencies listed in package.json.
 
-Create a file named .env in the root folder.
+4. Configure Environment Variables
 
-Open .env in a code editor (like VS Code) and add the following keys:
+Create a .env file in the project root and add the following environment variables:
 
-Code snippet
-# Your MongoDB connection string (e.g., from MongoDB Atlas or local MongoDB)
+# MongoDB connection string
 MONGODB_URI=mongodb+srv://<username>:<password>@yourcluster.mongodb.net/devdeck
 
-# Port configuration (Defaults to 3001 if left blank)
+# Server port (optional)
 PORT=3001
 
-# URL targeting your frontend client development server
+# Frontend application URL
 FRONTEND_URL=http://localhost:3000
 
-# Required by Better Auth for signing session tokens and encryption
-BETTER_AUTH_SECRET=a_long_random_secret_string_here
-(Make sure to swap out <username> and <password> with your real MongoDB cluster login credentials, or the server will crash on initialization).
+# Better Auth secret key
+BETTER_AUTH_SECRET=your_long_random_secret
 
-Step 5: Start the Development Server
-Since "type": "module" is configured in your configuration, you can execute the main application directly using Node.js:
+Important:
 
-Bash
+Replace <username> and <password> with your MongoDB credentials.
+Generate a secure random value for BETTER_AUTH_SECRET.
+Never commit your .env file to GitHub.
+5. Run the Development Server
+
+Start the backend server:
+
 node index.js
-If the environment variable file is loaded correctly and the database connects, your terminal will output:
 
-Plaintext
+If everything is configured correctly, you should see:
+
 🚀 DevDeck Backend server running at http://localhost:3001
+📁 Project Structure
+devdeck-server/
+├── controllers/
+├── lib/
+├── middleware/
+├── models/
+├── routes/
+├── .env
+├── .gitignore
+├── index.js
+├── package.json
+└── README.md
